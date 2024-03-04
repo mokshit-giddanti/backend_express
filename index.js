@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const autoIncrement = require('mongoose-auto-increment');
 const path = require('path');
 
-const PORT = process.env.PORT || 1800;
+const PORT = process.env.PORT ;
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://User:user@cluster0.7sewa5u.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect(process.env.MONGODB_URI , {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }, () => {
@@ -136,5 +136,5 @@ app.delete('/:id', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("Express server (Web Server) started at port 1800");
+  console.log("Express server (Web Server) started at port " + PORT);
 });
