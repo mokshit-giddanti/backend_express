@@ -3,8 +3,11 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const autoIncrement = require('mongoose-auto-increment');
 const path = require('path');
+require('dotenv').config();
 
-const PORT = process.env.PORT ;
+
+const PORT = process.env.PORT|| 1800;
+
 
 const app = express();
 
@@ -13,12 +16,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-mongoose.connect(process.env.MONGODB_URI , {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }, () => {
   console.log("MongoDB connected");
 });
+
 
 const userSchema2 = new mongoose.Schema({
   name: String,
@@ -137,4 +141,5 @@ app.delete('/:id', async (req, res) => {
 
 app.listen(PORT, () => {
   console.log("Express server (Web Server) started at port " + PORT);
+  console.log("MONGODB_URI"+process.env.MONGODB_URI);
 });
