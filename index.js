@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const autoIncrement = require('mongoose-auto-increment');
 const path = require('path');
 
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 1800;
 
 const app = express();
 
