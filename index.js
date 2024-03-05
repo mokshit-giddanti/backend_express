@@ -5,16 +5,20 @@ const autoIncrement = require('mongoose-auto-increment');
 const path = require('path');
 require('dotenv').config();
 
-
-const PORT = process.env.PORT|| 1800;
-
+const PORT = process.env.PORT || 1800;
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+
+// CORS middleware configuration
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -22,7 +26,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 }, () => {
   console.log("MongoDB connected");
 });
-
 
 const userSchema2 = new mongoose.Schema({
   name: String,
@@ -38,7 +41,7 @@ app.post("/login", (req, res) => {
   User2.findOne({ email: email }, (err, user) => {
     if (user) {
       if (password === user.password) {
-        res.send({ message: "Login Successfull", user: user });
+        res.send({ message: "Login Successful", user: user });
       } else {
         res.send({ message: "Password didn't match" });
       }
@@ -141,5 +144,5 @@ app.delete('/:id', async (req, res) => {
 
 app.listen(PORT, () => {
   console.log("Express server (Web Server) started at port " + PORT);
-  console.log("MONGODB_URI"+process.env.MONGODB_URI);
+  console.log("MONGODB_URI" + process.env.MONGODB_URI);
 });
