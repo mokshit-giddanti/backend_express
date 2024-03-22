@@ -5,11 +5,10 @@ const autoIncrement = require('mongoose-auto-increment');
 const path = require('path');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 1800;
+const PORT = process.env.PORT || 8000;
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -23,6 +22,7 @@ app.use((req, res, next) => {
   if (req.method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
     return res.status(200).json({});
+    
   }
   next();
 });
@@ -87,14 +87,15 @@ const userSchema = new mongoose.Schema({
   subj: String,
   pname: String,
   startdate: String,
-  status1: String
+  status: String // Change status1 to status
 });
+
 autoIncrement.initialize(mongoose.connection);
 userSchema.plugin(autoIncrement.plugin, 'user');
 const User = mongoose.model("User", userSchema);
 
 app.post("/add", (req, res) => {
-  const { name, id, TeamNumber, subj, pname, startdate, status1 } = req.body;
+  const { name, id, TeamNumber, subj, pname, startdate, status } = req.body;
   User.findOne({ id: id }, (err, user) => {
     if (user) {
       res.send({ message: "User already registered" });
@@ -106,7 +107,7 @@ app.post("/add", (req, res) => {
         subj,
         pname,
         startdate,
-        status1
+        status
       });
       newUser.save(err => {
         if (err) {
