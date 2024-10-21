@@ -1,6 +1,6 @@
-Frontend (ReactJS)
+Backend (ExpressJS)
 ------------------
-This repository contains the code for the frontend of the project. It is built using ReactJS, a popular JavaScript library for building user interfaces.
+This repository contains the code for the backend of the project. It is built using nodeJS, a popular JavaScript library for building user interfaces.
 
 Getting Started
 ---------------
